@@ -42,12 +42,12 @@ info2 = ['shenzhen','china',birth2]
 res = myfunction.JSreadable(myfunction.getAllinfo(*info2))
 astrodata = "const data = " + str(res)
 
-location = "D:/desktop/WORK/js_course/AstroChart/project/examples/radix/radix.html"
+location = "chartHtml/radix.html"
 #location = "testHtml.html"
 HtmlFile = open(location, 'r', encoding='utf-8')
 source_code = HtmlFile.read() 
 
-location2 = "D:/desktop/WORK/researchPlatform_Test/astrochart.js"
+location2 = "chartHtml/astrochart.js"
 HtmlFile2 = open(location2, 'r', encoding='utf-8')
 astroChartFunction = HtmlFile2.read() 
 astroChartFunction = "<script>\n" + astroChartFunction + "\n</script>"
