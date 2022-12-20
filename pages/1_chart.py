@@ -34,7 +34,6 @@ with minute:
 #components.iframe("http://127.0.0.1:5500/AstroChart/project/examples/radix/radix.html", height=700)
 #print(type(t_hour))
 
-birth2 = datetime(2022, 1, 1, 0,0)
 birth2 = datetime(d.year,d.month,d.day,t_hour,t_minute)
 birth2
 info2 = ['shenzhen','china',birth2]
