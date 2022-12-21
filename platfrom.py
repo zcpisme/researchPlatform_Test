@@ -10,16 +10,13 @@ import pandas as pd
 
 researchDf = pd.read_csv('data/researchDf.csv')
 
-mycatList = ['All']
-mycatList.extend(researchDf['category'].unique())
+mycatList = researchDf['category'].unique()
 category = st.selectbox('Which Category Are You Looking for?', mycatList)
 
-if category == 'All':
-    test= researchDf
 
-else:
-    df = researchDf[researchDf['category'] == category]
-    #test = df[~df['person'].duplicated()]
+df = researchDf[researchDf['category'] == category]
+#test = df[~df['person'].duplicated()]
+test = df
 
 mysubcatList = ['All']
 mysubcatList.extend(test['subcategory'].unique())
@@ -30,6 +27,7 @@ if subcategory == 'All':
 else:
     df = test[test['subcategory'] == subcategory]
     #test = df[~df['person'].duplicated()]
+    test = df
 
 mydetailList = ['All']
 mydetailList.extend(test['detail'].unique())
