@@ -1,3 +1,4 @@
 [server]
 maxUploadSize = 1000
 maxMessageSize = 1000
+enableWebsocketCompression = true
