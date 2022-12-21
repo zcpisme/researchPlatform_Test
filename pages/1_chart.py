@@ -35,7 +35,7 @@ with minute:
 #print(type(t_hour))
 
 birth2 = datetime(d.year,d.month,d.day,t_hour,t_minute)
-birth2 = datetime(2000, 12, 26 , 12, 0)
+#birth2 = datetime(2000, 12, 26 , 12, 0)
 info2 = ['shenzhen','china',birth2]
 
 
