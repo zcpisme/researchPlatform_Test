@@ -1,3 +1,7 @@
 [server]
 maxUploadSize = 800
 maxMessageSize = 800
+
+[theme]
+base="dark"
+primaryColor="purple"
