@@ -15,21 +15,23 @@ st.header("test html import")
 
 
 
-d = st.date_input(
-    "When's your birthday", min_value = datetime(1910, 1, 1), max_value = datetime(2080, 12, 31))
-st.write('Your birthday is:', d)
-
-#print(type(d.year))
-
-hour, minute = st.columns(2)
-
-with hour:
-   t_hour = st.selectbox('Birth hour is:', options = range(0,24), key = 'h')
-   st.write('Birth hour is:', t_hour)
-
-with minute:
-   t_minute = st.selectbox('Birth minute is:', options = range(0,60), key = 'm')
-   st.write('Birth minute is:', t_minute)
+# =============================================================================
+# d = st.date_input(
+#     "When's your birthday", min_value = datetime(1910, 1, 1), max_value = datetime(2080, 12, 31))
+# st.write('Your birthday is:', d)
+# 
+# #print(type(d.year))
+# 
+# hour, minute = st.columns(2)
+# 
+# with hour:
+#    t_hour = st.selectbox('Birth hour is:', options = range(0,24), key = 'h')
+#    st.write('Birth hour is:', t_hour)
+# 
+# with minute:
+#    t_minute = st.selectbox('Birth minute is:', options = range(0,60), key = 'm')
+#    st.write('Birth minute is:', t_minute)
+# =============================================================================
 
 #components.iframe("http://127.0.0.1:5500/AstroChart/project/examples/radix/radix.html", height=700)
 #print(type(t_hour))
