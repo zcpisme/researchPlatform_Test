@@ -19,7 +19,7 @@ if category == 'All':
 
 else:
     df = researchDf[researchDf['category'] == category]
-    test = df[~df['person'].duplicated()]
+    #test = df[~df['person'].duplicated()]
 
 mysubcatList = ['All']
 mysubcatList.extend(test['subcategory'].unique())
@@ -29,7 +29,7 @@ if subcategory == 'All':
     pass
 else:
     df = test[test['subcategory'] == subcategory]
-    test = df[~df['person'].duplicated()]
+    #test = df[~df['person'].duplicated()]
 
 mydetailList = ['All']
 mydetailList.extend(test['detail'].unique())
