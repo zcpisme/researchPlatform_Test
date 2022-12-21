@@ -8,6 +8,7 @@ Created on Tue Dec 13 17:44:48 2022
 import streamlit as st
 import pandas as pd
 
+@st.cache
 researchDf = pd.read_csv('data/researchDf.csv')
 
 mycatList = researchDf['category'].unique()
