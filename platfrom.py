@@ -21,25 +21,27 @@ else:
     df = researchDf[researchDf['category'] == category]
     test = df[~df['person'].duplicated()]
 
-mysubcatList = ['All']
-mysubcatList.extend(test['subcategory'].unique())
-subcategory = st.selectbox('Which Subcategory Are You Looking for?', mysubcatList)
-
-if subcategory == 'All':
-    pass
-else:
-    df = test[test['subcategory'] == subcategory]
-    test = df[~df['person'].duplicated()]
-
-mydetailList = ['All']
-mydetailList.extend(test['detail'].unique())
-detail = st.selectbox('Which Detail Are You Looking for?', mydetailList)
-
-if detail == 'All':
-    pass
-else:
-    df = test[test['detail'] == detail]
-    test = df[~df['person'].duplicated()]
+# =============================================================================
+# mysubcatList = ['All']
+# mysubcatList.extend(test['subcategory'].unique())
+# subcategory = st.selectbox('Which Subcategory Are You Looking for?', mysubcatList)
+# 
+# if subcategory == 'All':
+#     pass
+# else:
+#     df = test[test['subcategory'] == subcategory]
+#     test = df[~df['person'].duplicated()]
+# 
+# mydetailList = ['All']
+# mydetailList.extend(test['detail'].unique())
+# detail = st.selectbox('Which Detail Are You Looking for?', mydetailList)
+# 
+# if detail == 'All':
+#     pass
+# else:
+#     df = test[test['detail'] == detail]
+#     test = df[~df['person'].duplicated()]
+# =============================================================================
 
 
 st.dataframe(test)
