@@ -4,4 +4,4 @@ pyswisseph==2.8.0.post1
 pytz==2021.3
 streamlit==1.15.2
 swisseph==0.0.0.dev1
-tzwhere==3.0.3
+tzwhere
