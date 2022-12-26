@@ -48,6 +48,7 @@ info2 = [city2, country2, birth2]
 
 from geopy.geocoders import Nominatim
 geolocator = Nominatim(user_agent="my_request")
+st.write("Make sure the coordinates below are correct")
 st.write(geolocator.geocode(city2+','+country2).latitude, geolocator.geocode(city2+','+country2).longitude)
 
 
