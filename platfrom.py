@@ -58,9 +58,10 @@ try:
     #st.dataframe(showedDf)
     #showedDf['house'] = showedDf['house'].map(lambda x: int(x[5:]))
     total = showedDf["count"].sum()
-    showedDf['percentage'] = showedDf["count"]/total
     showedDf['total'] = total
-    
+    showedDf['percentage'] = showedDf["count"]/total
+    showedDf['expected'] = 1/showedDf.shape[0]
+    showedDf['difference'] = showedDf['percentage'] - showedDf['expected']
     st.dataframe(showedDf)
 except:
     pass
