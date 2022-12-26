@@ -34,8 +34,21 @@ with minute:
 #print(type(t_hour))
 
 birth2 = datetime(d.year,d.month,d.day,t_hour,t_minute)
+
+city, country = st.columns(2)
+
+with city:
+   city2 = st.text_input(label = "City", value = "shenzhen", key = 'city')
+
+with country:
+   country2 = st.text_input(label = "Country",value = "China" , key = 'country')
+
 #birth2 = datetime(2000, 12, 26 , 12, 0)
-info2 = ['shenzhen','china',birth2]
+info2 = [city2, country2, birth2]
+
+from geopy.geocoders import Nominatim
+geolocator = Nominatim(user_agent="my_request")
+st.write(geolocator.geocode(city2+','+country2).latitude, geolocator.geocode(city2+','+country2).longitude)
 
 
 res = myfunction.JSreadable(myfunction.getAllinfo(*info2))
