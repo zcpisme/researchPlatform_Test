@@ -39,8 +39,9 @@ else:
     df = test[test['detail'] == detail]
     test = df[~df['person'].duplicated()]
 
-
-st.dataframe(test[~test['adb_id'].duplicated()])
+nonDupDf = test[~test['adb_id'].duplicated()]
+nonDupDf.reset_index(drop = True, inplace = True)
+st.dataframe(nonDupDf)
 
 
 myvarList = [' ']
