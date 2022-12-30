@@ -8,7 +8,7 @@ Created on Tue Dec 13 17:44:48 2022
 import streamlit as st
 import pandas as pd
 #import myfunction
-researchDf = pd.read_csv('data/researchDf.csv')
+researchDf = pd.read_pickle('data/researchDf.pkl')
 
 mycatList = researchDf['category'].unique()
 category = st.selectbox('Which Category Are You Looking for?', mycatList)
