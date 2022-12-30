@@ -40,7 +40,9 @@ else:
     test = df[~df['person'].duplicated()]
 
 nonDupDf = test[~test['adb_id'].duplicated()]
+nonDupDf.sort_values(by=['adb_id'], inplace = True)
 nonDupDf.reset_index(drop = True, inplace = True)
+
 st.dataframe(nonDupDf)
 
 
