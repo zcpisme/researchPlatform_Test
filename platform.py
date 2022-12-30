@@ -40,7 +40,7 @@ else:
     test = df[~df['person'].duplicated()]
 
 
-st.dataframe(test)
+st.dataframe(test[~test['adb_id'].duplicated()])
 
 
 myvarList = [' ']
