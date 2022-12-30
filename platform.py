@@ -9,12 +9,41 @@ import streamlit as st
 import pandas as pd
 #import myfunction
 researchDf = pd.read_pickle('data/researchDf.pkl')
+df = researchDf.copy()
 
-mycatList = researchDf['category'].unique()
+def selectSubCategory(df, colName):
+    DfDict = {}
+    catDict = {f'All ({df.shape[0]} items available)': "All"}
+    mycatList = [f'All ({df.shape[0]} items available)']
+    for name,subDf in df.groupby(colName):
+        DfDict[name] = subDf
+        catDict[f"{name} ({subDf.shape[0]} items available)"] = name
+        mycatList.append(f"{name} ({subDf.shape[0]} items available)")
+    #mycatList = researchDf['category'].unique()
+    return DfDict, catDict, mycatList
+
+# =============================================================================
+# researchDfDict = {}
+# catDict = {}
+# mycatList = []
+# for i,j in researchDf.groupby('category'):
+#     researchDfDict[i] = j
+#     catDict[f"{i} ({j.shape[0]} items available)"] = i
+#     mycatList.append(f"{i} ({j.shape[0]} items available)")
+# =============================================================================
+#mycatList = researchDf['category'].unique()
+
+researchDfDict, catDict, mycatList = selectSubCategory(df, "category")
 category = st.selectbox('Which Category Are You Looking for?', mycatList)
 
 
-df = researchDf[researchDf['category'] == category]
+#df = researchDf[researchDf['category'] == category]
+if catDict[category] == 'All':
+    pass
+else:
+    df = researchDfDict[catDict[category]]
+    #df = df[~df['person'].duplicated()]
+#df = researchDfDict[catDict[category]]
 #df = df[~df['person'].duplicated()]
 
 
