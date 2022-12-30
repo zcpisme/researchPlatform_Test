@@ -15,31 +15,31 @@ category = st.selectbox('Which Category Are You Looking for?', mycatList)
 
 
 df = researchDf[researchDf['category'] == category]
-#test = df[~df['person'].duplicated()]
-test = df
+#df = df[~df['person'].duplicated()]
+
 
 mysubcatList = ['All']
-mysubcatList.extend(test['subcategory'].unique())
+mysubcatList.extend(df['subcategory'].unique())
 subcategory = st.selectbox('Which Subcategory Are You Looking for?', mysubcatList)
 
 if subcategory == 'All':
     pass
 else:
-    df = test[test['subcategory'] == subcategory]
-    #test = df[~df['person'].duplicated()]
-    test = df
+    df = df[df['subcategory'] == subcategory]
+    #df = df[~df['person'].duplicated()]
+
 
 mydetailList = ['All']
-mydetailList.extend(test['detail'].unique())
+mydetailList.extend(df['detail'].unique())
 detail = st.selectbox('Which Detail Are You Looking for?', mydetailList)
 
 if detail == 'All':
     pass
 else:
-    df = test[test['detail'] == detail]
-    test = df[~df['person'].duplicated()]
+    df = df[df['detail'] == detail]
+    df = df[~df['person'].duplicated()]
 
-nonDupDf = test[~test['adb_id'].duplicated()]
+nonDupDf = df[~df['adb_id'].duplicated()]
 nonDupDf.sort_values(by=['adb_id'], inplace = True)
 nonDupDf.reset_index(drop = True, inplace = True)
 
@@ -54,7 +54,7 @@ myvarList = [e for e in myvarList if e not in remove_item]
 myvar = st.selectbox('Which Variable Are You Looking for?', myvarList)
 
 try:
-    showedDf = pd.DataFrame((test[myvar].value_counts().reset_index()))
+    showedDf = pd.DataFrame((df[myvar].value_counts().reset_index()))
     
     showedDf.rename(columns = {myvar:"count"}, inplace = True)
     showedDf.rename(columns = {"index":myvar}, inplace = True)
