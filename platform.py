@@ -11,14 +11,15 @@ import pandas as pd
 researchDf = pd.read_pickle('data/researchDf.pkl')
 df = researchDf.copy()
 
-def selectSubCategory(df, colName):
+def selectSubCategory(inputdf, colName):
     DfDict = {}
     catDict = {f'All ({df.shape[0]} items available)': "All"}
     mycatList = [f'All ({df.shape[0]} items available)']
-    for name,subDf in df.groupby(colName):
+    for name,subDf in inputdf.groupby(colName):
         DfDict[name] = subDf
         catDict[f"{name} ({subDf.shape[0]} items available)"] = name
-        mycatList.append(f"{name} ({subDf.shape[0]} items available)")
+        if subDf.shape[0]>0:
+            mycatList.append(f"{name} ({subDf.shape[0]} items available)")
     #mycatList = researchDf['category'].unique()
     return DfDict, catDict, mycatList
 
@@ -35,8 +36,6 @@ def selectSubCategory(df, colName):
 
 researchDfDict, catDict, mycatList = selectSubCategory(df, "category")
 category = st.selectbox('Which Category Are You Looking for?', mycatList)
-
-
 #df = researchDf[researchDf['category'] == category]
 if catDict[category] == 'All':
     pass
@@ -46,26 +45,27 @@ else:
 #df = researchDfDict[catDict[category]]
 #df = df[~df['person'].duplicated()]
 
-
-mysubcatList = ['All']
-mysubcatList.extend(df['subcategory'].unique())
+#mysubcatList = ['All']
+#mysubcatList.extend(df['subcategory'].unique())
+researchDfDict, catDict, mysubcatList = selectSubCategory(df, "subcategory")
 subcategory = st.selectbox('Which Subcategory Are You Looking for?', mysubcatList)
-
-if subcategory == 'All':
+if catDict[subcategory] == 'All':
     pass
 else:
-    df = df[df['subcategory'] == subcategory]
+    df = researchDfDict[catDict[subcategory]]
     #df = df[~df['person'].duplicated()]
 
 
-mydetailList = ['All']
-mydetailList.extend(df['detail'].unique())
+#mydetailList = ['All']
+#mydetailList.extend(df['detail'].unique())
+researchDfDict, catDict, mydetailList = selectSubCategory(df, "detail")
 detail = st.selectbox('Which Detail Are You Looking for?', mydetailList)
 
-if detail == 'All':
+if catDict[detail] == 'All':
     pass
 else:
-    df = df[df['detail'] == detail]
+    #df = df[df['detail'] == detail]
+    df = researchDfDict[catDict[detail]]
     df = df[~df['person'].duplicated()]
 
 nonDupDf = df[~df['adb_id'].duplicated()]
