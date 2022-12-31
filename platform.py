@@ -17,9 +17,9 @@ def selectSubCategory(inputdf, colName):
     mycatList = [f'All ({df.shape[0]} items available)']
     for name,subDf in inputdf.groupby(colName):
         DfDict[name] = subDf
-        catDict[f"{name} ({subDf.shape[0]} items available)"] = name
+        catDict[f"{name} ({subDf.shape[0]} items available, {len(subDf['adb_id'].unique())} non-duplicated)"] = name
         if subDf.shape[0]>0:
-            mycatList.append(f"{name} ({subDf.shape[0]} items available)")
+            mycatList.append(f"{name} ({subDf.shape[0]} items available, {len(subDf['adb_id'].unique())} non-duplicated)")
     #mycatList = researchDf['category'].unique()
     return DfDict, catDict, mycatList
 
