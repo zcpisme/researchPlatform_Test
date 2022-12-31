@@ -13,8 +13,8 @@ df = researchDf.copy()
 
 def selectSubCategory(inputdf, colName):
     DfDict = {}
-    catDict = {f'All ({df.shape[0]} items available)': "All"}
-    mycatList = [f'All ({df.shape[0]} items available)']
+    catDict = {f"All ({df.shape[0]} items available, {len(inputdf['adb_id'].unique())} non-duplicated)": "All"}
+    mycatList = [f"All ({df.shape[0]} items available, {len(inputdf['adb_id'].unique())} non-duplicated)"]
     for name,subDf in inputdf.groupby(colName):
         DfDict[name] = subDf
         catDict[f"{name} ({subDf.shape[0]} items available, {len(subDf['adb_id'].unique())} non-duplicated)"] = name
