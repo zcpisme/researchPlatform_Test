@@ -70,6 +70,6 @@ source_code = source_code.replace('<script src="../../build/astrochart.js"></scr
 source_code = source_code.replace('const data = [0]', astrodata)
 
 #print(type(source_code))
-components.html(source_code, height=600)
+components.html(source_code, height=600, scrolling = True)
 
 #st.write(myfunction.JSreadable(myfunction.getAllinfo(*info2)))
