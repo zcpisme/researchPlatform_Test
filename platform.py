@@ -14,10 +14,14 @@ from st_aggrid import AgGrid, GridUpdateMode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 
 @st.cache(suppress_st_warning=True)
-researchDf = pd.read_pickle('data/researchDf.pkl')
-birthInfo = pd.read_pickle('data/birthInfo.pkl')
-birthInfo.rename(columns = {'birthtime':'time'}, inplace = True)
-df = researchDf.copy()
+def load_data():
+    researchDf = pd.read_pickle('data/researchDf.pkl')
+    birthInfo = pd.read_pickle('data/birthInfo.pkl')
+    birthInfo.rename(columns = {'birthtime':'time'}, inplace = True)
+    df = researchDf.copy()
+    return researchDf, birthInfo, df
+
+researchDf, birthInfo, df = load_data()
 
 def selectSubCategory(inputdf, colName):
     DfDict = {}
