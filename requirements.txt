@@ -7,3 +7,4 @@ streamlit
 swisseph==0.0.0.dev1
 tzwhere
 openpyxl
+streamlit-aggrid

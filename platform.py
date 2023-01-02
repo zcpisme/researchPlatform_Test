@@ -7,7 +7,12 @@ Created on Tue Dec 13 17:44:48 2022
 
 import streamlit as st
 import pandas as pd
-#import myfunction
+import myfunction
+import streamlit.components.v1 as components
+from datetime import datetime
+from st_aggrid import AgGrid, GridUpdateMode
+from st_aggrid.grid_options_builder import GridOptionsBuilder
+
 researchDf = pd.read_pickle('data/researchDf.pkl')
 df = researchDf.copy()
 
@@ -74,6 +79,72 @@ nonDupDf.reset_index(drop = True, inplace = True)
 
 st.dataframe(nonDupDf)
 
+# =============================================================================
+# selected_indices = st.multiselect('Select rows:', nonDupDf.index)
+# selected_rows = nonDupDf.loc[selected_indices]
+# st.write('### Selected Rows', selected_rows)
+# =============================================================================
+gd = GridOptionsBuilder.from_dataframe(nonDupDf[["person",'adb_id']])
+gd.configure_selection(selection_mode='single', use_checkbox=True)
+gridoptions = gd.build()
+
+select_person, chart = st.columns(2)
+
+with select_person:
+    grid_table = AgGrid(nonDupDf[["person",'adb_id']], height=400, gridOptions=gridoptions,
+                    update_mode=GridUpdateMode.SELECTION_CHANGED)
+
+with chart:
+   birth2 = datetime(2000, 12, 26 , 12, 0)
+   info2 = ["shenzhen", "china", birth2]
+   res = myfunction.JSreadable(myfunction.getAllinfo(*info2))
+   astrodata = "const data = " + str(res)
+
+   location = "chartHtml/radix.html"
+   #location = "testHtml.html"
+   HtmlFile = open(location, 'r', encoding='utf-8')
+   source_code = HtmlFile.read() 
+
+   location2 = "chartHtml/astrochart.js"
+   HtmlFile2 = open(location2, 'r', encoding='utf-8')
+   astroChartFunction = HtmlFile2.read() 
+   astroChartFunction = "<script>\n" + astroChartFunction + "\n</script>"
+   #print(astroChartFunction)
+
+   source_code = source_code.replace('<script src="../../build/astrochart.js"></script>', astroChartFunction)
+   source_code = source_code.replace("var radix = new astrology.Chart('paper', 600, 600).radix( data );", 
+                                     "var radix = new astrology.Chart('paper', 400, 400).radix( data );")
+   
+   source_code = source_code.replace('const data = [0]', astrodata)
+
+   #print(type(source_code))
+   components.html(source_code, height=400, scrolling= True)
+
+
+# =============================================================================
+# st.write('## Selected')
+# selected_row = grid_table["selected_rows"]
+# st.dataframe(selected_row)
+# =============================================================================
+
+# =============================================================================
+# data = {
+#     'country': ['Japan', 'China', 'Thailand', 'France', 'Belgium', 'South Korea'],
+#     'capital': ['Tokyo', 'Beijing', 'Bangkok', 'Paris', 'Brussels', 'Seoul']
+# }
+# 
+# df = pd.DataFrame(data)
+# gd = GridOptionsBuilder.from_dataframe(df)
+# gd.configure_selection(selection_mode='multiple', use_checkbox=True)
+# gridoptions = gd.build()
+# 
+# grid_table = AgGrid(df, height=250, gridOptions=gridoptions,
+#                     update_mode=GridUpdateMode.SELECTION_CHANGED)
+# 
+# st.write('## Selected')
+# selected_row = grid_table["selected_rows"]
+# st.dataframe(selected_row)
+# =============================================================================
 
 myvarList = [' ']
 myvarList.extend(list(researchDf.columns))
