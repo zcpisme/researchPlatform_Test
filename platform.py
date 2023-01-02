@@ -15,7 +15,7 @@ from st_aggrid.grid_options_builder import GridOptionsBuilder
 
 researchDf = pd.read_pickle('data/researchDf.pkl')
 birthInfo = pd.read_pickle('data/birthInfo.pkl')
-birthInfo.rename(columns = {'birthtime':'time'}, inpalce = True)
+birthInfo.rename(columns = {'birthtime':'time'}, inplace = True)
 df = researchDf.copy()
 
 def selectSubCategory(inputdf, colName):
