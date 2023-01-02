@@ -15,6 +15,7 @@ from st_aggrid.grid_options_builder import GridOptionsBuilder
 
 researchDf = pd.read_pickle('data/researchDf.pkl')
 birthInfo = pd.read_pickle('data/birthInfo.pkl')
+birthInfo.rename(columns = {'birthtime':'time'}, inpalce = True)
 df = researchDf.copy()
 
 def selectSubCategory(inputdf, colName):
@@ -101,7 +102,7 @@ with chart:
    info2 = ["Irvine", "US", birth2]
    try:
        selected_row = grid_table["selected_rows"]
-       birth2 = datetime.fromisoformat(selected_row[0]['birthtime'][:-1])
+       birth2 = datetime.fromisoformat(selected_row[0]['time'][:-1])
        info2 = [selected_row[0]['place'], selected_row[0]['country'], birth2]
        #res = myfunction.JSreadable(myfunction.getAllinfo(*info2))
    except:
