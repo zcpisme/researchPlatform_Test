@@ -14,6 +14,7 @@ from st_aggrid import AgGrid, GridUpdateMode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 
 researchDf = pd.read_pickle('data/researchDf.pkl')
+birthInfo = pd.read_pickle('data/birthInfo.pkl')
 df = researchDf.copy()
 
 def selectSubCategory(inputdf, colName):
@@ -84,19 +85,28 @@ st.dataframe(nonDupDf)
 # selected_rows = nonDupDf.loc[selected_indices]
 # st.write('### Selected Rows', selected_rows)
 # =============================================================================
-gd = GridOptionsBuilder.from_dataframe(nonDupDf[["person",'adb_id']])
+selectDf = nonDupDf[['adb_id','person']].merge(birthInfo, on = 'adb_id')
+gd = GridOptionsBuilder.from_dataframe(selectDf)
 gd.configure_selection(selection_mode='single', use_checkbox=True)
 gridoptions = gd.build()
 
 select_person, chart = st.columns(2)
 
 with select_person:
-    grid_table = AgGrid(nonDupDf[["person",'adb_id']], height=400, gridOptions=gridoptions,
+    grid_table = AgGrid(selectDf, height=400, gridOptions=gridoptions,
                     update_mode=GridUpdateMode.SELECTION_CHANGED)
 
 with chart:
-   birth2 = datetime(2000, 12, 26 , 12, 0)
-   info2 = ["shenzhen", "china", birth2]
+   birth2 = datetime(2023, 1, 1 , 0, 0)
+   info2 = ["Irvine", "US", birth2]
+   try:
+       selected_row = grid_table["selected_rows"]
+       birth2 = datetime.fromisoformat(selected_row[0]['birthtime'][:-1])
+       info2 = [selected_row[0]['place'], selected_row[0]['country'], birth2]
+       #res = myfunction.JSreadable(myfunction.getAllinfo(*info2))
+   except:
+       pass
+   #st.write(info2)
    res = myfunction.JSreadable(myfunction.getAllinfo(*info2))
    astrodata = "const data = " + str(res)
 
@@ -121,11 +131,6 @@ with chart:
    components.html(source_code, height=400, scrolling= True)
 
 
-# =============================================================================
-# st.write('## Selected')
-# selected_row = grid_table["selected_rows"]
-# st.dataframe(selected_row)
-# =============================================================================
 
 # =============================================================================
 # data = {
