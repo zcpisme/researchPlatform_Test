@@ -13,7 +13,7 @@ from datetime import datetime
 from st_aggrid import AgGrid, GridUpdateMode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True, max_entries = 5,ttl = 24*3600)
 def load_data():
     researchDf = pd.read_pickle('data/researchDf.pkl')
     birthInfo = pd.read_pickle('data/birthInfo.pkl')
