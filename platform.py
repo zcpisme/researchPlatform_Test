@@ -81,8 +81,9 @@ else:
     df = df[~df['person'].duplicated()]
 
 nonDupDf = df[~df['adb_id'].duplicated()]
-nonDupDf = nonDupDf[['As_sign', 'Sun_sign']]
-nonDupDf.sort_values(by=['adb_id'], inplace = True)
+#nonDupDf.sort_values(by=['adb_id'], inplace = True)
+nonDupDf = nonDupDf[['person', 'As_sign', 'Sun_sign']]
+
 nonDupDf.reset_index(drop = True, inplace = True)
 
 st.dataframe(nonDupDf)
