@@ -12,6 +12,23 @@ import streamlit.components.v1 as components
 from datetime import datetime
 from st_aggrid import AgGrid, GridUpdateMode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
+from st_pages import Page, show_pages
+
+# Specify what pages should be shown in the sidebar, and what their titles and icons
+
+show_pages(
+    [
+        Page("platform.py", "Astro Research", ":books:"),
+        Page("pages/1_chart.py", "Birth Chart", "♑"),
+    ]
+)
+# =============================================================================
+# st.set_page_config(
+#    page_title="Ex-stream-ly Cool App",
+#    layout="centered",
+#    initial_sidebar_state="auto",
+# )
+# =============================================================================
 
 @st.cache(suppress_st_warning=True, max_entries = 5,ttl = 24*3600)
 def load_data():
