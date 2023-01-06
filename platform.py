@@ -22,13 +22,11 @@ show_pages(
         Page("pages/1_chart.py", "Birth Chart", "♑"),
     ]
 )
-# =============================================================================
-# st.set_page_config(
-#    page_title="Ex-stream-ly Cool App",
-#    layout="centered",
-#    initial_sidebar_state="auto",
-# )
-# =============================================================================
+st.set_page_config(
+   page_title="Astro Research Platform",
+   layout="centered",
+   initial_sidebar_state="auto",
+)
 
 @st.cache(suppress_st_warning=True, max_entries = 5,ttl = 24*3600)
 def load_data():
