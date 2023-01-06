@@ -25,7 +25,7 @@ researchDf, birthInfo, df = load_data()
 
 def selectSubCategory(inputdf, colName):
     DfDict = {}
-    catDict = {f"{len(inputdf['adb_id'].unique())} persons)": "All"}
+    catDict = {'N\A': "All"}
     mycatList = [f"{len(inputdf['adb_id'].unique())} persons)"]
     for name,subDf in inputdf.groupby(colName):
         DfDict[name] = subDf
