@@ -25,7 +25,7 @@ researchDf, birthInfo, df = load_data()
 
 def selectSubCategory(inputdf, colName):
     DfDict = {}
-    catDict = {'N/A': "All"}
+    catDict = {"N/A": "All"}
     mycatList = ["N/A"]
     for name,subDf in inputdf.groupby(colName):
         DfDict[name] = subDf
@@ -81,13 +81,11 @@ else:
     df = df[~df['person'].duplicated()]
 
 nonDupDf = df[~df['adb_id'].duplicated()]
-#nonDupDf.sort_values(by=['adb_id'], inplace = True)
-#nonDupDf = nonDupDf[['adb_id','person', 'As_sign', 'Sun_sign']]
-
+nonDupDf.sort_values(by=['adb_id'], inplace = True)
 nonDupDf.reset_index(drop = True, inplace = True)
 selectDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'comment']]
-selectDf = nonDupDf[['person', 'adb_id']]
-#st.dataframe(nonDupDf[['person', 'As_sign', 'Sun_sign']])
+
+#st.dataframe(nonDupDf)
 
 # =============================================================================
 # selected_indices = st.multiselect('Select rows:', nonDupDf.index)
