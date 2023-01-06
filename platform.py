@@ -82,11 +82,11 @@ else:
 
 nonDupDf = df[~df['adb_id'].duplicated()]
 #nonDupDf.sort_values(by=['adb_id'], inplace = True)
-nonDupDf = nonDupDf[['person', 'As_sign', 'Sun_sign']]
+nonDupDf = nonDupDf[['adb_id','person', 'As_sign', 'Sun_sign']]
 
 nonDupDf.reset_index(drop = True, inplace = True)
 
-st.dataframe(nonDupDf)
+st.dataframe(nonDupDf[['person', 'As_sign', 'Sun_sign']])
 
 # =============================================================================
 # selected_indices = st.multiselect('Select rows:', nonDupDf.index)
@@ -94,6 +94,7 @@ st.dataframe(nonDupDf)
 # st.write('### Selected Rows', selected_rows)
 # =============================================================================
 selectDf = nonDupDf[['adb_id','person']].merge(birthInfo, on = 'adb_id')
+
 gd = GridOptionsBuilder.from_dataframe(selectDf)
 gd.configure_selection(selection_mode='single', use_checkbox=True)
 gridoptions = gd.build()
