@@ -113,7 +113,9 @@ selectDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'Moon_sign', 'com
 selectDf = selectDf.merge(birthInfo, on = 'adb_id')
 #selectDf.drop(columns = ['adb_id'], inplace = True)
 gd = GridOptionsBuilder.from_dataframe(selectDf[['person', 'As_sign', 'Sun_sign', 'Moon_sign', 'comment']])
-gd.configure_selection(selection_mode='single', use_checkbox=True)
+gd.configure_selection(selection_mode='single', 
+                       use_checkbox=False, 
+                       suppressRowClickSelection = False)
 gridoptions = gd.build()
 
 select_person, chart = st.columns(2)
@@ -178,10 +180,14 @@ with chart:
 # =============================================================================
 
 myvarList = [' ']
-myvarList.extend(list(researchDf.columns))
-remove_item = ['person','adb_id','Key','name','category',
-               'subcategory','detail','comment']
-myvarList = [e for e in myvarList if e not in remove_item]
+# =============================================================================
+# myvarList.extend(list(researchDf.columns))
+# remove_item = ['person','adb_id','Key','name','category',
+#                'subcategory','detail','comment']
+# myvarList = [e for e in myvarList if e not in remove_item]
+# =============================================================================
+var_to_keep = list(pd.read_csv('data/var_to_keep.csv').iloc[1:]['variable'])
+myvarList.extend(var_to_keep)
 myvar = st.selectbox('Which Variable Are You Looking for?', myvarList)
 
 try:
