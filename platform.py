@@ -25,13 +25,15 @@ researchDf, birthInfo, df = load_data()
 
 def selectSubCategory(inputdf, colName):
     DfDict = {}
-    catDict = {"N/A": "All"}
-    mycatList = ["N/A"]
+    catDict = {}
+    mycatList = []
     for name,subDf in inputdf.groupby(colName):
         DfDict[name] = subDf
         catDict[f"{name} ({len(subDf['adb_id'].unique())} persons)"] = name
         if subDf.shape[0]>0:
             mycatList.append(f"{name} ({len(subDf['adb_id'].unique())} persons)")
+    catDict['All'] = "All"
+    mycatList.append("All")
     #mycatList = researchDf['category'].unique()
     return DfDict, catDict, mycatList
 
@@ -47,6 +49,7 @@ def selectSubCategory(inputdf, colName):
 #mycatList = researchDf['category'].unique()
 
 researchDfDict, catDict, mycatList = selectSubCategory(df, "category")
+#st.write(catDict)
 category = st.selectbox('Which Category Are You Looking for?', mycatList)
 #df = researchDf[researchDf['category'] == category]
 if catDict[category] == 'All':
@@ -83,7 +86,7 @@ else:
 nonDupDf = df[~df['adb_id'].duplicated()]
 nonDupDf.sort_values(by=['adb_id'], inplace = True)
 nonDupDf.reset_index(drop = True, inplace = True)
-selectDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'comment']]
+selectDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'Moon_sign', 'comment']]
 
 #st.dataframe(nonDupDf)
 
@@ -93,8 +96,8 @@ selectDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'comment']]
 # st.write('### Selected Rows', selected_rows)
 # =============================================================================
 selectDf = selectDf.merge(birthInfo, on = 'adb_id')
-selectDf.drop(columns = ['adb_id'], inplace = True)
-gd = GridOptionsBuilder.from_dataframe(selectDf)
+#selectDf.drop(columns = ['adb_id'], inplace = True)
+gd = GridOptionsBuilder.from_dataframe(selectDf[['person', 'As_sign', 'Sun_sign', 'Moon_sign', 'comment']])
 gd.configure_selection(selection_mode='single', use_checkbox=True)
 gridoptions = gd.build()
 
