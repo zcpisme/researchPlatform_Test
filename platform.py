@@ -86,6 +86,7 @@ nonDupDf = df[~df['adb_id'].duplicated()]
 
 nonDupDf.reset_index(drop = True, inplace = True)
 selectDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'comment']]
+selectDf = nonDupDf[['person', 'adb_id']]
 #st.dataframe(nonDupDf[['person', 'As_sign', 'Sun_sign']])
 
 # =============================================================================
