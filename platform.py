@@ -25,13 +25,13 @@ researchDf, birthInfo, df = load_data()
 
 def selectSubCategory(inputdf, colName):
     DfDict = {}
-    catDict = {f"All ({df.shape[0]} items available, {len(inputdf['adb_id'].unique())} non-duplicated)": "All"}
-    mycatList = [f"All ({df.shape[0]} items available, {len(inputdf['adb_id'].unique())} non-duplicated)"]
+    catDict = {f"{len(inputdf['adb_id'].unique())} persons)": "All"}
+    mycatList = [f"{len(inputdf['adb_id'].unique())} persons)"]
     for name,subDf in inputdf.groupby(colName):
         DfDict[name] = subDf
-        catDict[f"{name} ({subDf.shape[0]} items available, {len(subDf['adb_id'].unique())} non-duplicated)"] = name
+        catDict[f"{name} ({len(subDf['adb_id'].unique())} persons)"] = name
         if subDf.shape[0]>0:
-            mycatList.append(f"{name} ({subDf.shape[0]} items available, {len(subDf['adb_id'].unique())} non-duplicated)")
+            mycatList.append(f"{name} ({len(subDf['adb_id'].unique())} persons)")
     #mycatList = researchDf['category'].unique()
     return DfDict, catDict, mycatList
 
@@ -81,6 +81,7 @@ else:
     df = df[~df['person'].duplicated()]
 
 nonDupDf = df[~df['adb_id'].duplicated()]
+nonDupDf = nonDupDf[['As_sign', 'Sun_sign']]
 nonDupDf.sort_values(by=['adb_id'], inplace = True)
 nonDupDf.reset_index(drop = True, inplace = True)
 
