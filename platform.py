@@ -94,7 +94,7 @@ st.dataframe(nonDupDf[['person', 'As_sign', 'Sun_sign']])
 # st.write('### Selected Rows', selected_rows)
 # =============================================================================
 selectDf = nonDupDf[['adb_id','person']].merge(birthInfo, on = 'adb_id')
-
+selectDf.drop(['adb_id'], inplace = True)
 gd = GridOptionsBuilder.from_dataframe(selectDf)
 gd.configure_selection(selection_mode='single', use_checkbox=True)
 gridoptions = gd.build()
