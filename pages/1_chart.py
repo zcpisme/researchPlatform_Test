@@ -8,27 +8,38 @@ Created on Tue Dec 13 17:44:48 2022
 import streamlit as st
 import streamlit.components.v1 as components
 import myfunction
-from datetime import datetime
+from datetime import datetime, timedelta
 
-st.header("test html import")
+st.header("Create Your Own ♋ & Variables!")
 
 
+# =============================================================================
+# d = st.date_input(
+#     "When's your birthday", min_value = datetime(1910, 1, 1), max_value = datetime(2080, 12, 31))
+# st.write('Your birthday is:', d)
+# =============================================================================
 
-d = st.date_input(
-    "When's your birthday", min_value = datetime(1910, 1, 1), max_value = datetime(2080, 12, 31))
-st.write('Your birthday is:', d)
+date, time = st.columns(2)
+with date:
+    d = st.date_input(
+        "When's your birthday", min_value = datetime(1910, 1, 1), max_value = datetime(2080, 12, 31))
+    #st.write(d)
 
-#print(type(d.year))
-
-hour, minute = st.columns(2)
-
-with hour:
-   t_hour = st.selectbox('Birth hour is:', options = range(0,24), key = 'h')
-   st.write('Birth hour is:', t_hour)
-
-with minute:
-   t_minute = st.selectbox('Birth minute is:', options = range(0,60), key = 'm')
-   st.write('Birth minute is:', t_minute)
+with time:
+    start = "00:00"
+    end = "23:59"
+    times = []
+    start = now = datetime.strptime(start, "%H:%M")
+    end = datetime.strptime(end, "%H:%M")
+    while now != end:
+        times.append(str(now.strftime("%H:%M")))
+        now += timedelta(minutes=1)
+    times.append(end.strftime("%H:%M"))
+    birthtime = datetime.strptime(st.selectbox('Birth Time is: ',times), "%H:%M")
+    t_hour = birthtime.hour
+    #st.write('Birth hour is:', t_hour)
+    t_minute = birthtime.minute
+    #st.write('Birth minute is:', t_minute)
 
 #components.iframe("http://127.0.0.1:5500/AstroChart/project/examples/radix/radix.html", height=700)
 #print(type(t_hour))
@@ -73,3 +84,6 @@ source_code = source_code.replace('const data = [0]', astrodata)
 components.html(source_code, height=600, scrolling = True)
 
 #st.write(myfunction.JSreadable(myfunction.getAllinfo(*info2)))
+person_name = st.text_input(label = "Name",value = "Alan" , key = 'person_name')
+your_df = myfunction.create_variable(info2, person_name=person_name, adb_id=-1)
+st.dataframe(your_df)

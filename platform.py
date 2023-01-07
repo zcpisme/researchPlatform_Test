@@ -24,6 +24,7 @@ show_pages(
 )
 st.set_page_config(
    page_title="Astro Research Platform",
+   page_icon="♋",
    layout="centered",
    initial_sidebar_state="auto",
 )
