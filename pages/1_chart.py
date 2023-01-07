@@ -10,6 +10,10 @@ import streamlit.components.v1 as components
 import myfunction
 from datetime import datetime, timedelta
 
+st.set_page_config(
+   page_icon="♋",
+)
+
 st.header("Create Your Own ♋ & Variables!")
 
 
