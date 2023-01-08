@@ -102,7 +102,7 @@ else:
 nonDupDf = df[~df['adb_id'].duplicated()]
 nonDupDf.sort_values(by=['adb_id'], inplace = True)
 nonDupDf.reset_index(drop = True, inplace = True)
-selectDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'Moon_sign', 'comment']]
+nonDupDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'Moon_sign', 'comment']]
 
 #st.dataframe(nonDupDf)
 
@@ -111,18 +111,18 @@ selectDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'Moon_sign', 'com
 # selected_rows = nonDupDf.loc[selected_indices]
 # st.write('### Selected Rows', selected_rows)
 # =============================================================================
-selectDf = selectDf.merge(birthInfo, on = 'adb_id')
+nonDupDf = nonDupDf.merge(birthInfo, on = 'adb_id')
 #selectDf.drop(columns = ['adb_id'], inplace = True)
-gd = GridOptionsBuilder.from_dataframe(selectDf[['person', 'As_sign', 'Sun_sign', 'Moon_sign', 'comment']])
+gd = GridOptionsBuilder.from_dataframe(nonDupDf[['person', 'As_sign', 'Sun_sign', 'Moon_sign', 'comment']])
 gd.configure_selection(selection_mode='single', 
                        use_checkbox=False, 
                        suppressRowClickSelection = False)
 gridoptions = gd.build()
 
-select_person, chart = st.columns(2)
+select_person, chart = st.columns([0.4,0.6])
 
 with select_person:
-    grid_table = AgGrid(selectDf, height=400, gridOptions=gridoptions,
+    grid_table = AgGrid(nonDupDf, height=400, gridOptions=gridoptions,
                     update_mode=GridUpdateMode.SELECTION_CHANGED)
 
 with chart:
