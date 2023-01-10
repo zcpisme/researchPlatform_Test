@@ -14,7 +14,7 @@ st.set_page_config(
    page_icon="♋",
 )
 
-st.header("Create Your Own ♋ & Variables!")
+st.header("Create Your Own Chart & Variables!")
 
 
 # =============================================================================

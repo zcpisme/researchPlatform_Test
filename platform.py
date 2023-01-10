@@ -20,8 +20,8 @@ from st_pages import Page, show_pages
 
 show_pages(
     [
-        Page("platform.py", "Astro Research", ":books:"),
-        Page("pages/1_chart.py", "Birth Chart", "♑"),
+        Page("platform.py", "Astro Research"),
+        Page("pages/1_chart.py", "Birth Chart"),
     ]
 )
 st.set_page_config(
