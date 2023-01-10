@@ -16,6 +16,8 @@ from st_pages import Page, show_pages
 
 # Specify what pages should be shown in the sidebar, and what their titles and icons
 
+
+
 show_pages(
     [
         Page("platform.py", "Astro Research", ":books:"),
@@ -29,6 +31,25 @@ st.set_page_config(
    initial_sidebar_state="auto",
 )
 
+st.sidebar.image('data/Logo_Icon.png', use_column_width=True)
+
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;
+            }
+            footer {visibility: visible;
+            }
+            footer:after{
+                content:'*Data from Astrodatabank';
+                display:block;
+                position:relative;
+            }
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
+
+
 @st.cache(suppress_st_warning=True, max_entries = 5,ttl = 24*3600)
 def load_data():
     researchDf = pd.read_pickle('data/researchDf.pkl')
@@ -38,6 +59,7 @@ def load_data():
     return researchDf, birthInfo, df
 
 researchDf, birthInfo, df = load_data()
+
 
 def selectSubCategory(inputdf, colName):
     DfDict = {}
@@ -100,6 +122,7 @@ else:
     df = df[~df['person'].duplicated()]
 
 nonDupDf = df[~df['adb_id'].duplicated()]
+df = nonDupDf.copy()
 nonDupDf.sort_values(by=['adb_id'], inplace = True)
 nonDupDf.reset_index(drop = True, inplace = True)
 nonDupDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'Moon_sign', 'comment']]
@@ -112,6 +135,7 @@ nonDupDf = nonDupDf[['person', 'adb_id','As_sign', 'Sun_sign', 'Moon_sign', 'com
 # st.write('### Selected Rows', selected_rows)
 # =============================================================================
 nonDupDf = nonDupDf.merge(birthInfo, on = 'adb_id')
+
 #selectDf.drop(columns = ['adb_id'], inplace = True)
 gd = GridOptionsBuilder.from_dataframe(nonDupDf[['person', 'As_sign', 'Sun_sign', 'Moon_sign', 'comment']])
 gd.configure_selection(selection_mode='single', 
@@ -201,7 +225,12 @@ try:
     total = showedDf["count"].sum()
     showedDf['total'] = total
     showedDf['percentage'] = showedDf["count"]/total
-    showedDf['expected'] = 1/showedDf.shape[0]
+    if myvar == 'mc_ruler' or myvar == 'as_ruler':
+        st.write('wait of check')
+        showedDf['expected'] = 2/12
+        showedDf.loc[showedDf[showedDf[myvar].isin(['Sun','Moon'])].index,'expected'] = 1/12
+    else:
+        showedDf['expected'] = 1/showedDf.shape[0]
     showedDf['difference'] = showedDf['percentage'] - showedDf['expected']
     st.dataframe(showedDf)
 except:
