@@ -8,6 +8,7 @@ Created on Tue Dec 13 17:44:48 2022
 import streamlit as st
 import streamlit.components.v1 as components
 import myfunction
+import pandas as pd
 from datetime import datetime, timedelta
 
 st.set_page_config(
@@ -37,6 +38,8 @@ st.header("Create Your Own Chart & Variables!")
 #     "When's your birthday", min_value = datetime(1910, 1, 1), max_value = datetime(2080, 12, 31))
 # st.write('Your birthday is:', d)
 # =============================================================================
+
+var_to_keep = list(pd.read_csv('data/var_to_keep.csv')['variable'])
 
 date, time = st.columns(2)
 with date:
@@ -105,10 +108,9 @@ try:
     #st.write(myfunction.JSreadable(myfunction.getAllinfo(*info2)))
     person_name = st.text_input(label = "Name",value = "Alan" , key = 'person_name')
     your_df = myfunction.create_variable(info2, person_name=person_name, adb_id=-1)
+    your_df = your_df[your_df.columns.intersection(var_to_keep)]
+    
     st.dataframe(your_df)
 
 except:
     st.warning('invalid input')
-
-
-    
