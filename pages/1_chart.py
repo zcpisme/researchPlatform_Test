@@ -14,6 +14,21 @@ st.set_page_config(
    page_icon="♋",
 )
 
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;
+            }
+            footer {visibility: visible;
+            }
+            footer:after{
+                content:'*Data from Astrodatabank';
+                display:block;
+                position:relative;
+            }
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 st.header("Create Your Own Chart & Variables!")
 
 
@@ -53,41 +68,47 @@ birth2 = datetime(d.year,d.month,d.day,t_hour,t_minute)
 city, country = st.columns(2)
 
 with city:
-   city2 = st.text_input(label = "City", value = "shenzhen", key = 'city')
+   city2 = st.text_input(label = "City", value = "Irvine", key = 'city')
 
 with country:
-   country2 = st.text_input(label = "Country",value = "China" , key = 'country')
+   country2 = st.text_input(label = "Country",value = "United States" , key = 'country')
 
 #birth2 = datetime(2000, 12, 26 , 12, 0)
 info2 = [city2, country2, birth2]
 
 from geopy.geocoders import Nominatim
-geolocator = Nominatim(user_agent="my_request")
-st.write("Make sure the coordinates below are correct")
-st.write(geolocator.geocode(city2+','+country2).latitude, geolocator.geocode(city2+','+country2).longitude)
+try:
+    geolocator = Nominatim(user_agent="my_request")
+    st.write("Make sure the coordinates below are correct")
+    st.write(geolocator.geocode(city2+','+country2).latitude, geolocator.geocode(city2+','+country2).longitude)
+    
+    res = myfunction.JSreadable(myfunction.getAllinfo(*info2))
+    astrodata = "const data = " + str(res)
+    
+    location = "chartHtml/radix.html"
+    #location = "testHtml.html"
+    HtmlFile = open(location, 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    
+    location2 = "chartHtml/astrochart.js"
+    HtmlFile2 = open(location2, 'r', encoding='utf-8')
+    astroChartFunction = HtmlFile2.read() 
+    astroChartFunction = "<script>\n" + astroChartFunction + "\n</script>"
+    #print(astroChartFunction)
+    
+    source_code = source_code.replace('<script src="../../build/astrochart.js"></script>', astroChartFunction)
+    source_code = source_code.replace('const data = [0]', astrodata)
+    
+    #print(type(source_code))
+    components.html(source_code, height=600, scrolling = True)
+    
+    #st.write(myfunction.JSreadable(myfunction.getAllinfo(*info2)))
+    person_name = st.text_input(label = "Name",value = "Alan" , key = 'person_name')
+    your_df = myfunction.create_variable(info2, person_name=person_name, adb_id=-1)
+    st.dataframe(your_df)
+
+except:
+    st.warning('invalid input')
 
 
-res = myfunction.JSreadable(myfunction.getAllinfo(*info2))
-astrodata = "const data = " + str(res)
-
-location = "chartHtml/radix.html"
-#location = "testHtml.html"
-HtmlFile = open(location, 'r', encoding='utf-8')
-source_code = HtmlFile.read() 
-
-location2 = "chartHtml/astrochart.js"
-HtmlFile2 = open(location2, 'r', encoding='utf-8')
-astroChartFunction = HtmlFile2.read() 
-astroChartFunction = "<script>\n" + astroChartFunction + "\n</script>"
-#print(astroChartFunction)
-
-source_code = source_code.replace('<script src="../../build/astrochart.js"></script>', astroChartFunction)
-source_code = source_code.replace('const data = [0]', astrodata)
-
-#print(type(source_code))
-components.html(source_code, height=600, scrolling = True)
-
-#st.write(myfunction.JSreadable(myfunction.getAllinfo(*info2)))
-person_name = st.text_input(label = "Name",value = "Alan" , key = 'person_name')
-your_df = myfunction.create_variable(info2, person_name=person_name, adb_id=-1)
-st.dataframe(your_df)
+    
