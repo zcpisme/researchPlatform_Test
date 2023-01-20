@@ -70,6 +70,7 @@ def selectSubCategory(inputdf, colName):
         catDict[f"{name} ({len(subDf['adb_id'].unique())} persons)"] = name
         if subDf.shape[0]>0:
             mycatList.append(f"{name} ({len(subDf['adb_id'].unique())} persons)")
+    mycatList.reverse()
     catDict['All'] = "All"
     mycatList.append("All")
     #mycatList = researchDf['category'].unique()
@@ -224,14 +225,14 @@ try:
     #showedDf['house'] = showedDf['house'].map(lambda x: int(x[5:]))
     total = showedDf["count"].sum()
     showedDf['total'] = total
-    showedDf['percentage'] = showedDf["count"]/total
+    showedDf['percentage(%)'] = showedDf["count"]/total *100
     if myvar == 'mc_ruler' or myvar == 'as_ruler':
-        st.write('wait of check')
-        showedDf['expected'] = 2/12
-        showedDf.loc[showedDf[showedDf[myvar].isin(['Sun','Moon'])].index,'expected'] = 1/12
+        showedDf['expected(%)'] = 2/12 *100
+        showedDf.loc[showedDf[showedDf[myvar].isin(['Sun','Moon'])].index,'expected(%)'] = 1/12 *100
     else:
-        showedDf['expected'] = 1/showedDf.shape[0]
-    showedDf['difference'] = showedDf['percentage'] - showedDf['expected']
-    st.dataframe(showedDf)
+        showedDf['expected(%)'] = 1/showedDf.shape[0] *100
+    showedDf['difference(%)'] = showedDf['percentage(%)'] - showedDf['expected(%)']
+    st.dataframe(showedDf.style.format({'expected(%)': '{:.2f}', 
+                                        'percentage(%)': '{:.2f}', 'difference(%)': '{:.2f}'}))
 except:
     pass
