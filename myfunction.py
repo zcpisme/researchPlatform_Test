@@ -6,7 +6,7 @@ Created on Sun Nov  6 17:42:19 2022
 """
 import swisseph as swe
 import pandas as pd
-import streamlit as st
+
 
 from collections import defaultdict
 
@@ -103,9 +103,8 @@ def getAllinfo(place, county, birthtime):
         timezone_str = mytzwhere.tzNameAt(location.latitude,location.longitude)
         #print(str(place)+', '+str(county))
         local = pytz.timezone(timezone_str)
-        local_dt = local.localize(birthtime.utcnow())
+        local_dt = local.localize(birthtime, is_dst=None)
         utc_dt = local_dt.astimezone(pytz.utc)
-        st.write(utc_dt)
         
         return gethouse_and_planet_info(location,utc_dt)
     except:
@@ -114,7 +113,7 @@ def getAllinfo(place, county, birthtime):
             timezone_str = mytzwhere.tzNameAt(location.latitude,location.longitude)
         #print(str(place)+', '+str(county))
             local = pytz.timezone(timezone_str)
-            local_dt = local.localize(birthtime.utcnow())
+            local_dt = local.localize(birthtime, is_dst=None)
             utc_dt = local_dt.astimezone(pytz.utc)
             return gethouse_and_planet_info(location,utc_dt)
         
