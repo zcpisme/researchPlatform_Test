@@ -105,6 +105,7 @@ def getAllinfo(place, county, birthtime):
         local = pytz.timezone(timezone_str)
         local_dt = local.localize(birthtime, is_dst=None)
         utc_dt = local_dt.astimezone(pytz.utc)
+        print(utc_dt)
         
         return gethouse_and_planet_info(location,utc_dt)
     except:
