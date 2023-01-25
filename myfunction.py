@@ -103,7 +103,7 @@ def getAllinfo(place, county, birthtime):
         timezone_str = mytzwhere.tzNameAt(location.latitude,location.longitude)
         #print(str(place)+', '+str(county))
         local = pytz.timezone(timezone_str)
-        local_dt = local.localize(birthtime)
+        local_dt = local.localize(birthtime.utcnow())
         utc_dt = local_dt.astimezone(pytz.utc)
         st.write(utc_dt)
         
@@ -114,7 +114,7 @@ def getAllinfo(place, county, birthtime):
             timezone_str = mytzwhere.tzNameAt(location.latitude,location.longitude)
         #print(str(place)+', '+str(county))
             local = pytz.timezone(timezone_str)
-            local_dt = local.localize(birthtime)
+            local_dt = local.localize(birthtime.utcnow())
             utc_dt = local_dt.astimezone(pytz.utc)
             return gethouse_and_planet_info(location,utc_dt)
         
