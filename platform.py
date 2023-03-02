@@ -50,7 +50,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 
 
-@st.cache(suppress_st_warning=True, max_entries = 5,ttl = 24*3600)
+@st.cache_data
 def load_data():
     researchDf = pd.read_pickle('data/researchDf.pkl')
     birthInfo = pd.read_pickle('data/birthInfo.pkl')
