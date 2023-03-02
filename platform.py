@@ -33,7 +33,6 @@ st.set_page_config(
 
 st.sidebar.image('data/Logo_Icon.png', use_column_width=True)
 
-
 hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;
